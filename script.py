@@ -3,6 +3,7 @@ import re
 from collections import Counter
 from typing import List
 
+
 def parse_arguments() -> argparse.Namespace:
     """
     Парсит аргументы командной строки.
@@ -11,7 +12,8 @@ def parse_arguments() -> argparse.Namespace:
     """
     parser = argparse.ArgumentParser(description="Анализ популярных кодов операторов в номерах телефонов.")
     parser.add_argument('file', type=str, help='Путь к файлу с данными анкет.')
-    return parser.parse_args()
+    return parser.parse_args().file
+
 
 def read_file(file_path: str) -> List[str]:
     """
@@ -25,11 +27,11 @@ def read_file(file_path: str) -> List[str]:
             lines = file.readlines()
         return lines
     except FileNotFoundError:
-        print(f"Файл {file_path} не найден.")
-        raise
+        raise FileNotFoundError(f"Файл {file_path} не найден.")
     except Exception as e:
-        print(f"Ошибка при чтении файла: {e}")
-        raise
+         raise Exception(f"Ошибка при чтении файла: {e}")
+        
+
 
 def extract_operator_codes(lines: List[str]) -> List[str]:
     """
@@ -53,6 +55,7 @@ def extract_operator_codes(lines: List[str]) -> List[str]:
                 print(f"Не удалось найти номер в строке: {line.strip()}")  # Отладочный вывод
     return operator_codes
 
+
 def find_most_common_code(codes: List[str]) -> str:
     """
     Находит наиболее частый код оператора.
@@ -60,29 +63,33 @@ def find_most_common_code(codes: List[str]) -> str:
     :param codes: Список кодов операторов.
     :return: Наиболее частый код.
     """
-    if not codes:
-        return "Нет данных для анализа."
-    
+
     counter = Counter(codes)
     most_common = counter.most_common(1)[0]
     return most_common[0]
+
 
 def main():
     """
     Основная функция программы.
     """
-    args = parse_arguments()
+    file = parse_arguments()
     try:
-        lines = read_file(args.file)
+        lines = read_file(file)
         print(f"Прочитано строк: {len(lines)}")  # Отладочный вывод
         codes = extract_operator_codes(lines)
         print(f"Извлечено кодов операторов: {len(codes)}")  # Отладочный вывод
+
         if codes:
             print(f"Коды операторов: {codes}")  # Отладочный вывод
+        else:
+            return print(f"Коды телефонов не найдены.")
+        
         most_common_code = find_most_common_code(codes)
         print(f"Наиболее распространенный код оператора: {most_common_code}")
     except Exception as e:
         print(f"Произошла ошибка: {e}")
+
 
 if __name__ == "__main__":
     main()
