@@ -2,9 +2,9 @@ import argparse
 
 import cv2
 
-from src.image_loader import load_image
-from src.image_processor import overlay_images
-from src.visualization import plot_histogram, show_results
+from image_loader import load_image
+from image_processor import overlay_images
+from visualization import plot_histogram, show_results
 
 
 
