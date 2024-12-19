@@ -8,7 +8,7 @@ def setup_display_options():
     pd.set_option('display.width', None)
 
 
-def create_histogram(df: pd.DataFrame, output_path: str = 'histogram.png'):
+def create_histogram(column: pd.Series, title: str, xlabel: str, ylabel: str):
     """
     Создает гистограмму распределения площадей.
     
@@ -18,15 +18,15 @@ def create_histogram(df: pd.DataFrame, output_path: str = 'histogram.png'):
     """
     # Создаем гистограмму
     plt.figure(figsize=(12, 8))
-    plt.hist(df['Площадь'], bins=30, edgecolor='black', color='skyblue')
+    plt.hist(column, bins=30, edgecolor='black', color='skyblue')
     
     # Настраиваем внешний вид
-    plt.title('Распределение площадей изображений', fontsize=14)
-    plt.xlabel('Площадь (пикселей)', fontsize=12)
-    plt.ylabel('Количество изображений', fontsize=12)
+    plt.title(title, fontsize=14)
+    plt.xlabel(xlabel, fontsize=12)
+    plt.ylabel(ylabel, fontsize=12)
     plt.grid(True, alpha=0.3)
     
-    # Делаем отступы, чтобы текст не обрезался
+    # Делаем отступы
     plt.tight_layout()
     
     plt.show() 
