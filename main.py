@@ -2,8 +2,6 @@ from data_loader import create_dataframe
 from image_processor import add_image_info
 from visualizer import setup_display_options, create_histogram
 
-import os
-
 
 def main():
     # Настраиваем отображение
@@ -30,7 +28,7 @@ def main():
     print(df)
     
     # Создаем и показываем визуализацию
-    create_histogram(df)
+    create_histogram(df['Площадь'], 'Распределение площадей изображений', 'Площадь (пикселей)', 'Количество изображений')
 
 
 if __name__ == "__main__":
